@@ -9,7 +9,7 @@ def unzip_products(arg):
     if arg['wr'] != None:
         env_path = "D:\\wr_envs\\" + arg['wr'] + "\\"
     else:
-        env_path = "D:\\osi_test\\"
+        env_path = arg['path']
 
     for zip_name in os.listdir(archive_path):
         zip = zipfile.ZipFile(archive_path + zip_name)
