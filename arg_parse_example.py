@@ -1,3 +1,5 @@
+"""OSI Command-line script for automated build environment creation"""
+
 import argparse
 import zipfile
 import os
@@ -10,6 +12,9 @@ class EnvironmentBuilder(object):
         self._force = force
         self._env_root = env_root
 
+    #---------------------------------------------------------------------------
+    # Internal
+    #---------------------------------------------------------------------------
     def _unzip_products(self):
         version = self._version
         wr = self._work_request
@@ -28,6 +33,9 @@ class EnvironmentBuilder(object):
     def _setup_root_env(self):
         pass  # TODO: Implement me
 
+    #---------------------------------------------------------------------------
+    # Public API
+    #---------------------------------------------------------------------------
     def start(self):
         """Start the party"""
         self._unzip_based_on_version()
