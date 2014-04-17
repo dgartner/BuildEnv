@@ -1,17 +1,23 @@
 #!usr/bin/python
 import os
-import listdir
 import sys
+import zipfile
 
-numArgs = len(sys.argv)
+num_args = len(sys.argv)
 
-if numArgs == 1:
-    archive = "D:\\archive44"
-else if numArgs > 1:
+if num_args == 1:
+    archive = "D:\\archive44\\"
+elif num_args > 1:
     ver = sys.argv[1]
     if int(ver) == 40:
-        archive = "D:\\archive40"
-    else if int(ver) == 44:
-        archive = "D:\\archive44"
+        archive = "D:\\archive40\\"
+        env = "D:\\osi40_test\\monarch"
+    elif int(ver) == 44:
+        archive = "D:\\archive44\\"
+        env = "D:\\osi44_test\\monarch"
 
-zips = os.listdir(archive)
+for zip_name in os.listdir(archive):
+    zip = zipfile.ZipFile(archive + zip_name)
+    zip.extractall(env)
+            
+
