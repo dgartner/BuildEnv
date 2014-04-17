@@ -2,25 +2,50 @@
 import os
 import sys
 import zipfile
+import getopt
 
-def unzip_products(version=44):
-    if int(version) == 40:
-        archive = "D:\\archive40\\"
-        env = "D:\\osi40_test\\monarch"
-    elif int(version) == 44:
-        archive = "D:\\archive44\\"
-        env = "D:\\osi44_test\\monarch"
-
-    for zip_name in os.listdir(archive):
-        zip = zipfile.ZipFile(archive + zip_name)
-        zip.extractall(env)
-            
-if __name__ == "__main__":
-    num_args = len(sys.argv)
-    if num_args != 2:
-        print ('Please specify version number')
-        exit(0)
+def unzip_products(arg):
+    archive_path = "D:\\archive" + arg['version'] + "\\"
+    if arg['wr'] != None:
+        env_path = "D:\\wr_envs\\" + arg['wr'] + "\\"
     else:
-        version = int(sys.argv[1])
-    unzip_products(version)
+        env_path = "D:\\osi_test\\"
+
+    for zip_name in os.listdir(archive_path):
+        zip = zipfile.ZipFile(archive_path + zip_name)
+        zip.extractall(env_path)
+
+def usage():
+    print ("Your arguments are bad!")
+
+def handle_arguments(arg):
+    arg['version'] = "44"
+    arg['path'] = "D:\\osi\\"
+    arg['force'] = False
+    arg['wr'] = None
+
+    try:
+        opts, args = getopt.getopt(sys.argv[1:], "hfv:p:w:", 
+                ["help", "version=", "path="])
+    except getopt.GetoptError as err:
+        print str(err)
+        usage()
+        sys.exit(2)
+
+    for o, a in opts:
+        if o in ('-v', '--version'):
+            arg['version'] = a
+        elif o in ('-p', '--path'):
+            arg['path'] = a
+        elif o == '-f':
+            arg['force'] = True
+        elif o == 'w':
+            arg['wr'] = a
+        else:
+            assert False, "unhandled option"
+
+if __name__ == "__main__":
+    arg = {}
+    handle_arguments(arg)
+    unzip_products(arg)
 
