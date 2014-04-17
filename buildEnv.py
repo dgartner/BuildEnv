@@ -7,9 +7,9 @@ import getopt
 def unzip_products(arg):
     archive_path = "D:\\archive" + arg['version'] + "\\"
     if arg['wr'] != None:
-        env_path = "D:\\wr_envs\\" + arg['wr'] + "\\"
+        env_path = "D:\\wr_envs\\" + arg['wr'] + "\\monarch\\"
     else:
-        env_path = "D:\\osi_test\\"
+        env_path = arg['path'] + "\\"
 
     for zip_name in os.listdir(archive_path):
         zip = zipfile.ZipFile(archive_path + zip_name)
@@ -39,7 +39,7 @@ def handle_arguments(arg):
             arg['path'] = a
         elif o == '-f':
             arg['force'] = True
-        elif o == 'w':
+        elif o == '-w':
             arg['wr'] = a
         else:
             assert False, "unhandled option"
